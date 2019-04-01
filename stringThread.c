@@ -14,7 +14,7 @@ struct criticalRegion {
 };
 
 
-int main(int argc, char *argv[]) {
+int main(int argc, char **argv) {
    struct criticalRegion data = {"",0};
    pthread_t threads[2];
 
@@ -60,12 +60,12 @@ void *identifiesNumber(struct criticalRegion *pData) {
 };
 
 
-void binaryLock (int (*funcao)(char), struct criticalRegion *pData, FILE *arq, char cor[]){
+void binaryLock (int (*function)(char), struct criticalRegion *pData, FILE *arq, char cor[]){
    int i = 0;
    while(pData->string[i] != '\0') {
       if(pData->lock == 0) {
          pData->lock = 1;
-         if(funcao(pData->string[i])) {
+         if(function(pData->string[i])) {
             fprintf(arq, "%c", pData->string[i]);
             pData->string[i] = ' ';
          }

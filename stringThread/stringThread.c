@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <pthread.h>
 #include <ctype.h>
 #include <unistd.h>
@@ -25,7 +26,7 @@ int main(int argc, char **argv) {
    
    for(int i = 0; i < 2; i++) pthread_join(threads[i], NULL);
   // printf("\n%s",data.string);
-   return 0;
+   return EXIT_SUCCESS;
    
 }
 
@@ -70,7 +71,7 @@ void binaryLock (int (*function)(char), struct criticalRegion *pData, FILE *arq,
             pData->string[i] = ' ';
          }
          pData->lock = 0;
-         usleep(20000);
+         usleep(25000);
          ++i;
       } else {
          printf("\033[31m Esperando %s %p\033[31m  desbloquear a variavel\n",cor,arq);

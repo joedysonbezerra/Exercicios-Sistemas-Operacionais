@@ -5,7 +5,7 @@ build: greetings string
 greetings:
 	@echo "Compilando..."
 
-string: stringThread.c
+string: stringMutex.c
 	$(CC) $^ -o $@ -pthread
 
 clean: string

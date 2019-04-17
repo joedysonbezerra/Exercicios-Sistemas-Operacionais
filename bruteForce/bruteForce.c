@@ -6,6 +6,7 @@
 
 #define NUMBER_THREADS 10
 #define MAX 9999999999
+
 void *bruteForce();
 void *createThreads();
 
@@ -53,22 +54,22 @@ int main(int argc, char **argv) {
    return EXIT_SUCCESS;
 }
 
-void *bruteForce(void *value) {
-   pthread_mutex_lock(&((struct data*)value)->mutex);
+void *bruteForce(void *pArgs) {
+   pthread_mutex_lock(&((struct data*)pArgs)->mutex);
    
-   int id = (int)((struct data*)value)->id;
-   long long int initial = (long long int)((struct data*)value)->initial;
-   long long int end = (long long int)((struct data*)value)->end;
+   int id = (int)((struct data*)pArgs)->id;
+   long long int initial = (long long int)((struct data*)pArgs)->initial;
+   long long int end = (long long int)((struct data*)pArgs)->end;
    
-   pthread_cond_signal(&((struct data*)value)->semaphore);
+   pthread_cond_signal(&((struct data*)pArgs)->semaphore);
    
-   pthread_mutex_unlock(&((struct data*)value)->mutex);
+   pthread_mutex_unlock(&((struct data*)pArgs)->mutex);
    
    char password [10];
    for(initial; initial < end; initial++) {
       //printf("t_id - %d initial - %lld end - %lld\n",id,initial,end);
       sprintf(password, "%lld", initial );
-		if(strcmp(((struct data*)value)->password,password) == 0) {
+		if(strcmp(((struct data*)pArgs)->password,password) == 0) {
 			printf("\033[37m Thread -\033[31m %d\033[37m Senha -\033[32m %lld\n",id, initial);
 			exit(EXIT_SUCCESS);
 		}

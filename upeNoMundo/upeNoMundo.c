@@ -12,7 +12,7 @@ void *visit();
 int main(int argc, char **argv) {
    pthread_t class[NUMBER_THREADS];
    pthread_barrier_t barrier;
-   pthread_barrier_init(&barrier, NULL, 5);
+   pthread_barrier_init(&barrier, NULL, NUMBER_THREADS);
 
    int i;
    for(i = 0; i < NUMBER_THREADS; i++) { 

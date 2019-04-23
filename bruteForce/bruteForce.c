@@ -24,6 +24,7 @@ int main(int argc, char **argv) {
    pthread_t threads[NUMBER_THREADS];
    int i = 0;
    
+   sprintf(argv[1], "%lld",atoll(argv[1]));
    strcpy(args->password,argv[1]); 
    args->end = 0;
    
@@ -37,7 +38,7 @@ int main(int argc, char **argv) {
       args->end += aux;
       pthread_create(&threads[i], NULL, bruteForce,(void *)args);
       
-      pthread_cond_wait(&args->semaphore, &args->mutex);//espera 
+      pthread_cond_wait(&args->semaphore, &args->mutex);
       i++;
       pthread_mutex_unlock(&args->mutex);
    }
@@ -55,7 +56,7 @@ void *bruteForce(void *pArgs) {
    long long int initial = (long long int)((struct data*)pArgs)->initial;
    long long int end = (long long int)((struct data*)pArgs)->end;
    
-   pthread_cond_signal(&((struct data*)pArgs)->semaphore);//produz
+   pthread_cond_signal(&((struct data*)pArgs)->semaphore);
    
    pthread_mutex_unlock(&((struct data*)pArgs)->mutex);
    
@@ -64,7 +65,7 @@ void *bruteForce(void *pArgs) {
       // printf("t_id - %d Alvo - %lld\n",id,initial);
       sprintf(password, "%lld", initial );
 		if(strcmp(((struct data*)pArgs)->password,password) == 0) {
-			printf("\033[37m Thread -\033[31m %d\033[37m Senha -\033[32m %lld\n",id, initial);
+			printf("\033[37m Thread -\033[31m %d\033[37m Senha -\033[32m %s\n",id, password);
 			exit(EXIT_SUCCESS);
 		}
 			

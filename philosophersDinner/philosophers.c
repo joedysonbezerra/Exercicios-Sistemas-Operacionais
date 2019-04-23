@@ -18,14 +18,15 @@ int main(int argc, char **argv) {
    for(i = 0; i < NUMBER_THREADS; i++) pthread_create(&philosophers[i], NULL, life,(void*)(intptr_t)i);
 
    for(i = 0; i < NUMBER_THREADS; i++) pthread_join(philosophers[i],NULL);
-
+   
+   return EXIT_SUCCESS;
 }
 
 void *life(void *arg) {
    const int id = (int)(intptr_t)arg; 
    while (1) {
-      eat(&id);
       think(&id);
+      eat(&id);
    } 
 }
 
@@ -36,18 +37,18 @@ void eat(int *id) {
 
       pthread_mutex_lock(&mutexFork[left]);
       pthread_mutex_lock(&mutexFork[right]);
-      
+         
       printf("\033[32mFilosófos - %d Comendo ...\n", *id);
+         
       sleep(3);
-      
+         
       printf("\033[33mFilosófos - %d Parou de Comer\n", *id);
       pthread_mutex_unlock(&mutexFork[left]);
-      pthread_mutex_unlock(&mutexFork[right]);
+      pthread_mutex_unlock(&mutexFork[right]); 
 
-   
 }
 
 void think(int *id) {
-   printf("\033[37mFilosófos - %d Pensando ...\n", *id);
+   printf("\033[36mFilosófos - %d Pensando ...\n", *id);
    sleep(1);
 }
